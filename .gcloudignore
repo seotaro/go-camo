@@ -4,7 +4,11 @@
 
 # upload list
 
-!build/
-!build/bin/
-!build/bin/go-camo
+!.
+!go.mod
+!go.sum
+!Makefile
+!cmd/**
+!pkg/**
+!build/**
 !Dockerfile

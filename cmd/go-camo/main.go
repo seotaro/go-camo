@@ -203,6 +203,11 @@ func main() {
 		config.HMACKey = []byte(hmacKey)
 	}
 
+	port := os.Getenv("PORT")
+	if port != "" {
+		opts.BindAddress = "0.0.0.0:" + port
+	}
+
 	// flags override env var
 	if opts.HMACKey != "" {
 		config.HMACKey = []byte(opts.HMACKey)

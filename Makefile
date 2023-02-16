@@ -22,6 +22,12 @@ GOBUILD_FLAGS     := ${GOBUILD_DEPFLAGS} ${GOBUILD_OPTIONS} -ldflags "${GOBUILD_
 CC_BUILD_ARCHES    = darwin/amd64 darwin/arm64 freebsd/amd64 linux/amd64 linux/arm64 windows/amd64
 CC_OUTPUT_TPL     := ${BUILDDIR}/bin/{{.Dir}}.{{.OS}}-{{.Arch}}
 
+# Google Cloud Platform
+PROJECT_ID := 
+REGION := 
+CAMO_APP := camo
+CAMO_KEY := 
+
 # some exported vars (pre-configure go build behavior)
 export GO111MODULE=on
 export CGO_ENABLED=0
@@ -151,7 +157,7 @@ release-sign:
 release: cross-tar release-sign
 all: build man
 
-deploy: build
+deploy-cloud-run: 
 	gcloud builds submit . --tag asia.gcr.io/$(PROJECT_ID)/$(CAMO_APP) --project $(PROJECT_ID) 
 	gcloud run deploy $(CAMO_APP) \
 		--project $(PROJECT_ID) \
@@ -161,4 +167,5 @@ deploy: build
 		--memory 256Mi \
 		--concurrency 1 \
 		--max-instances 2 \
+		--allow-unauthenticated \
 		--set-env-vars "GOCAMO_HMAC=$(CAMO_KEY)"
