@@ -150,3 +150,15 @@ release-sign:
 
 release: cross-tar release-sign
 all: build man
+
+deploy: build
+	gcloud builds submit . --tag asia.gcr.io/$(PROJECT_ID)/$(CAMO_APP) --project $(PROJECT_ID) 
+	gcloud run deploy $(CAMO_APP) \
+		--project $(PROJECT_ID) \
+		--image asia.gcr.io/$(PROJECT_ID)/$(CAMO_APP) \
+		--platform managed \
+		--region $(REGION) \
+		--memory 256Mi \
+		--concurrency 1 \
+		--max-instances 2 \
+		--set-env-vars "GOCAMO_HMAC=$(CAMO_KEY)"

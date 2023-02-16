@@ -1,0 +1,10 @@
+# ignore all
+
+*
+
+# upload list
+
+!build/
+!build/bin/
+!build/bin/go-camo
+!Dockerfile
