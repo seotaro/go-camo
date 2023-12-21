@@ -1,0 +1,14 @@
+# ignore all
+
+*
+
+# upload list
+
+!.
+!go.mod
+!go.sum
+!Makefile
+!cmd/**
+!pkg/**
+!build/**
+!Dockerfile
